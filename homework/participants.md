@@ -22,3 +22,4 @@
 - 김세웅: kozdevel@gmail.com
 - 손주형 : ppp.012@daum.net
 - 유우섭 : dntjq5130@naver.com
+- 김세웅: kozdevel@gmail.com
