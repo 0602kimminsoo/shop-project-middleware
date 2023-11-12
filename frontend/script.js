@@ -1,36 +1,19 @@
-var state = [];
-
-function generateID() {
-    var randLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
-    return randLetter + Date.now();
-}
-
-function pushToState(title, status, id) {
-    var baseState = getTodoItems();
-    baseState[id] = {id: id, title: title, status: status};
-    syncState(baseState);
-}
-
 function setToDone(id) {
-    var baseState = getTodoItems();
+    const baseState = getTodoItems()
     if (baseState[id].status === 'new') {
         baseState[id].status = 'done'
     } else {
-        baseState[id].status = 'new';
+        baseState[id].status = 'new'
     }
 
-    syncState(baseState);
+    syncState(baseState)
 }
 
 function deleteTodo(id) {
     console.log(id)
-    var baseState = getTodoItems();
+    const baseState = getTodoItems()
     delete baseState[id]
     syncState(baseState)
-}
-
-function resetState() {
-    localStorage.setItem("state", null);
 }
 
 async function getTodoItems() {
@@ -39,43 +22,35 @@ async function getTodoItems() {
     return items
 }
 
-function addItem(text, status, id, noUpdate) {
-    var id = id ? id : generateID();
-    var c = status === "done" ? "danger" : "";
-    var item =
+function addItem(item) {
+    const c = item.status === "done" ? "danger" : ""
+    const html =
         '<li data-id="' +
-        id +
+        item.id +
         '" class="animated flipInX ' +
         c +
         '"><div class="checkbox"><span class="close"><i class="fa fa-times"></i></span><label><span class="checkbox-mask"></span><input type="checkbox" />' +
-        text +
-        "</label></div></li>";
+        item.title +
+        "</label></div></li>"
 
-    var isError = $(".form-control").hasClass("hidden");
-
-    if (text === "") {
+    if (item.title === "") {
         $(".err")
             .removeClass("hidden")
-            .addClass("animated bounceIn");
+            .addClass("animated bounceIn")
     } else {
-        $(".err").addClass("hidden");
-        $(".todo-list").append(item);
+        $(".err").addClass("hidden")
+        $(".todo-list").append(html)
     }
 
-    $(".refresh").removeClass("hidden");
-
-    $(".no-items").addClass("hidden");
+    $(".refresh").removeClass("hidden")
+    $(".no-items").addClass("hidden")
 
     $(".form-control")
         .val("")
-        .attr("placeholder", "✍️ Add item...");
+        .attr("placeholder", "✍️ Add item...")
     setTimeout(function () {
-        $(".todo-list li").removeClass("animated flipInX");
-    }, 500);
-
-    if (!noUpdate) {
-        pushToState(text, "new", id);
-    }
+        $(".todo-list li").removeClass("animated flipInX")
+    }, 500)
 }
 
 function refresh() {
@@ -83,194 +58,119 @@ function refresh() {
         $(this)
             .delay(70 * i)
             .queue(function () {
-                $(this).addClass("animated bounceOutLeft");
-                $(this).dequeue();
-            });
-    });
+                $(this).addClass("animated bounceOutLeft")
+                $(this).dequeue()
+            })
+    })
 
     setTimeout(function () {
-        $(".todo-list li").remove();
-        $(".no-items").removeClass("hidden");
-        $(".err").addClass("hidden");
-    }, 800);
+        $(".todo-list li").remove()
+        $(".no-items").removeClass("hidden")
+        $(".err").addClass("hidden")
+    }, 800)
 }
 
 $(function () {
-    var err = $(".err"),
+    const err = $(".err"),
         formControl = $(".form-control"),
-        isError = formControl.hasClass("hidden");
+        isError = formControl.hasClass("hidden")
 
     if (!isError) {
         formControl.blur(function () {
-            err.addClass("hidden");
-        });
+            err.addClass("hidden")
+        })
     }
 
     $(".add-btn").on("click", function () {
-        var itemVal = $(".form-control").val();
-        addItem(itemVal);
-        formControl.focus();
-    });
+        const itemVal = $(".form-control").val()
+        addItem(itemVal)
+        formControl.focus()
+    })
 
-    $(".refresh").on("click", refresh);
+    $(".refresh").on("click", refresh)
 
     $(".todo-list").on("click", 'input[type="checkbox"]', function () {
-        var li = $(this)
+        const li = $(this)
             .parent()
             .parent()
-            .parent();
-        li.toggleClass("danger");
-        li.toggleClass("animated flipInX");
+            .parent()
+        li.toggleClass("danger")
+        li.toggleClass("animated flipInX")
 
-        setToDone(li.data().id);
+        setToDone(li.data().id)
 
         setTimeout(function () {
-            li.removeClass("animated flipInX");
-        }, 500);
-    });
+            li.removeClass("animated flipInX")
+        }, 500)
+    })
 
     $(".todo-list").on("click", ".close", function () {
-        var box = $(this)
+        const box = $(this)
             .parent()
-            .parent();
+            .parent()
 
         if ($(".todo-list li").length == 1) {
-            box.removeClass("animated flipInX").addClass("animated                bounceOutLeft");
+            box.removeClass("animated flipInX").addClass("animated                bounceOutLeft")
             setTimeout(function () {
-                box.remove();
-                $(".no-items").removeClass("hidden");
-                $(".refresh").addClass("hidden");
-            }, 500);
+                box.remove()
+                $(".no-items").removeClass("hidden")
+                $(".refresh").addClass("hidden")
+            }, 500)
         } else {
-            box.removeClass("animated flipInX").addClass("animated bounceOutLeft");
+            box.removeClass("animated flipInX").addClass("animated bounceOutLeft")
             setTimeout(function () {
-                box.remove();
-            }, 500);
+                box.remove()
+            }, 500)
         }
 
         deleteTodo(box.data().id)
-    });
+    })
 
     $(".form-control").keypress(function (e) {
         if (e.which == 13) {
-            var itemVal = $(".form-control").val();
-            addItem(itemVal);
+            const itemVal = $(".form-control").val()
+            addItem(itemVal)
         }
-    });
-    $(".todo-list").sortable();
-    $(".todo-list").disableSelection();
-});
-
-var todayContainer = document.querySelector(".today");
-
-
-var d = new Date();
-
-
-var weekday = new Array(7);
-weekday[0] = "Sunday 🖖";
-weekday[1] = "Monday 💪😀";
-weekday[2] = "Tuesday 😜";
-weekday[3] = "Wednesday 😌☕️";
-weekday[4] = "Thursday 🤗";
-weekday[5] = "Friday 🍻";
-weekday[6] = "Saturday 😴";
-
-
-var n = weekday[d.getDay()];
-
-
-var randomWordArray = Array(
-    "Oh my, it's ",
-    "Whoop, it's ",
-    "Happy ",
-    "Seems it's ",
-    "Awesome, it's ",
-    "Have a nice ",
-    "Happy fabulous ",
-    "Enjoy your "
-);
-
-var randomWord =
-    randomWordArray[Math.floor(Math.random() * randomWordArray.length)];
-
-
-todayContainer.innerHTML = randomWord + n;
-(async () => {
-    const todoItems = await getTodoItems();
-    todoItems.forEach(item => {
-        addItem(item.title, item.status, item.id, true);
     })
-    var mins, secs, update;
+    $(".todo-list").sortable()
+    $(".todo-list").disableSelection()
+})
 
-    init();
+const todayContainer = document.querySelector(".today")
 
-    function init() {
-        (mins = 25), (secs = 59);
-    }
+function setHeaderByDay() {
+    const weekday = [
+        "Sunday 🖖",
+        "Monday 💪😀",
+        "Tuesday 😜",
+        "Wednesday 😌☕️",
+        "Thursday 🤗",
+        "Friday 🍻",
+        "Saturday 😴"
+    ]
 
+    const n = weekday[new Date().getDay()]
+    const randomWordArray = [
+        "Oh my, it's ",
+        "Whoop, it's ",
+        "Happy ",
+        "Seems it's ",
+        "Awesome, it's ",
+        "Have a nice ",
+        "Happy fabulous ",
+        "Enjoy your "
+    ]
 
-    set();
+    const randomWord =
+        randomWordArray[Math.floor(Math.random() * randomWordArray.length)]
+    todayContainer.innerHTML = randomWord + n
+}
 
-    function set() {
-        $(".mins").text(mins);
-    }
-
-
-    $("#start").on("click", start_timer);
-    $("#reset").on("click", reset);
-    $("#inc").on("click", inc);
-    $("#dec").on("click", dec);
-
-    function start_timer() {
-
-        set();
-
-        $(".dis").attr("disabled", true);
-
-        $(".mins").text(--mins);
-        $(".separator").text(":");
-        update_timer();
-
-        update = setInterval(update_timer, 1000);
-    }
-
-    function update_timer() {
-        $(".secs").text(secs);
-        --secs;
-        if (mins == 0 && secs < 0) {
-            reset();
-        } else if (secs < 0 && mins > 0) {
-            secs = 59;
-            --mins;
-            $(".mins").text(mins);
-        }
-    }
-
-
-    function reset() {
-        clearInterval(update);
-        $(".secs").text("");
-        $(".separator").text("");
-        init();
-        $(".mins").text(mins);
-        $(".dis").attr("disabled", false);
-    }
-
-
-    function inc() {
-        mins++;
-        $(".mins").text(mins);
-    }
-
-
-    function dec() {
-        if (mins > 1) {
-            mins--;
-            $(".mins").text(mins);
-        } else {
-            alert("This is the minimum limit.");
-        }
-    }
-})();
+(async () => {
+    setHeaderByDay()
+    const todoItems = await getTodoItems()
+    todoItems.forEach(item => {
+        addItem(item)
+    })
+})()
 
