@@ -1,22 +1,4 @@
-function setToDone(id) {
-    const baseState = getTodoItems()
-    if (baseState[id].status === 'new') {
-        baseState[id].status = 'done'
-    } else {
-        baseState[id].status = 'new'
-    }
-
-    syncState(baseState)
-}
-
-function deleteTodo(id) {
-    console.log(id)
-    const baseState = getTodoItems()
-    delete baseState[id]
-    syncState(baseState)
-}
-
-async function getTodoItems() {
+async function getTodoItemsFromServer() {
     const response = await fetch("http://localhost:3000/todo-items")
     const items = await response.json()
     return items
@@ -70,7 +52,74 @@ function refresh() {
     }, 800)
 }
 
-$(function () {
+function setHeaderByDay() {
+    const todayContainer = document.querySelector(".today")
+    const weekday = [
+        "Sunday 🖖",
+        "Monday 💪😀",
+        "Tuesday 😜",
+        "Wednesday 😌☕️",
+        "Thursday 🤗",
+        "Friday 🍻",
+        "Saturday 😴"
+    ]
+
+    const n = weekday[new Date().getDay()]
+    const randomWordArray = [
+        "Oh my, it's ",
+        "Whoop, it's ",
+        "Happy ",
+        "Seems it's ",
+        "Awesome, it's ",
+        "Have a nice ",
+        "Happy fabulous ",
+        "Enjoy your "
+    ]
+
+    const randomWord =
+        randomWordArray[Math.floor(Math.random() * randomWordArray.length)]
+    todayContainer.innerHTML = randomWord + n
+}
+
+(async () => {
+    this.todoItems = await getTodoItemsFromServer()
+
+    function syncTodoItemsWithDisplay(todoItems) {
+        $(".todo-list").html("")
+
+        todoItems.forEach(item => {
+            addItem(item)
+        })
+    }
+
+    function syncTodoItems(newOtoItems) {
+        this.todoItems = [...newOtoItems]
+        return () => {
+            syncTodoItemsWithDisplay(this.todoItems)
+        }
+    }
+
+    function getTodoItemsFrom() {
+        return this.todoItems
+    }
+
+    function setToDone(id) {
+        const todoItems = [...getTodoItemsFrom()]
+        const todoItemIndex = todoItems.findIndex(item => item.id === id)
+        const todoItem = todoItems[todoItemIndex]
+        const newStatus = (todoItem.status === 'new') ? "done" : "new"
+        todoItem.status = newStatus
+        todoItems.splice(todoItemIndex, 1, todoItem)
+        syncTodoItems(todoItems)
+    }
+
+    function deleteTodo(id) {
+        console.log(id)
+        const baseState = getTodoItemsFromServer()
+        delete baseState[id]
+        syncState(baseState)
+    }
+
     const err = $(".err"),
         formControl = $(".form-control"),
         isError = formControl.hasClass("hidden")
@@ -134,43 +183,9 @@ $(function () {
     })
     $(".todo-list").sortable()
     $(".todo-list").disableSelection()
-})
 
-const todayContainer = document.querySelector(".today")
 
-function setHeaderByDay() {
-    const weekday = [
-        "Sunday 🖖",
-        "Monday 💪😀",
-        "Tuesday 😜",
-        "Wednesday 😌☕️",
-        "Thursday 🤗",
-        "Friday 🍻",
-        "Saturday 😴"
-    ]
-
-    const n = weekday[new Date().getDay()]
-    const randomWordArray = [
-        "Oh my, it's ",
-        "Whoop, it's ",
-        "Happy ",
-        "Seems it's ",
-        "Awesome, it's ",
-        "Have a nice ",
-        "Happy fabulous ",
-        "Enjoy your "
-    ]
-
-    const randomWord =
-        randomWordArray[Math.floor(Math.random() * randomWordArray.length)]
-    todayContainer.innerHTML = randomWord + n
-}
-
-(async () => {
     setHeaderByDay()
-    const todoItems = await getTodoItems()
-    todoItems.forEach(item => {
-        addItem(item)
-    })
+    syncTodoItems(todoItems)()
 })()
 
