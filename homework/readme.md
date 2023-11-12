@@ -23,8 +23,7 @@ Pull Request 를 통해 과제를 제출한다.
 
 - From : 과제 작성한 브랜치 
 - To : homework/3rd/apply
-
-ex)
+- ex)
 <img width="810" alt="스크린샷 2023-11-12 오후 12 22 52" src="https://github.com/node3rd-basic/node_3_basic_Class/assets/4198098/2a9f1609-e3a3-47a7-9376-94276c3ac9f2">
 
 ### Pull Request 이름
