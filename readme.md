@@ -67,3 +67,17 @@
 
 ### 18회차 : 정리
 - 이제 다시 멋진 프로젝트를 만들어 보자
+
+## Branch
+- homework 
+  - 과제 제출 및 과제 제출 통합 브랜치
+- feature
+  - 각 기능을 작성한 branch / 학생들은 해당 branch 를 수정 push merge commit 하지 않는다.
+
+## Directories
+- backend
+  - todolist 프로그램의 backend 코드
+- frontend
+  - todolist 프로그램의 frontend 코드
+- homework
+  - 학생들의 과제 제출을 위한 디렉토리
