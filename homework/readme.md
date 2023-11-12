@@ -19,9 +19,15 @@ Pull Request 를 통해 과제를 제출한다.
 ### Pull Request 
 From : 과제 작성한 브랜치 
 To : homework/3rd/apply
+ex)
+<img width="810" alt="스크린샷 2023-11-12 오후 12 22 52" src="https://github.com/node3rd-basic/node_3_basic_Class/assets/4198098/2a9f1609-e3a3-47a7-9376-94276c3ac9f2">
 
 ### Pull Request 이름
 [한글 이름] 과제 이름
+
+### Pull Request 내용
+과제를 작성하면서 어려웠던 점, 질문 내용을 작성한다.
+그 밖에 상세히 기록할 것이 있으면 무엇이든 작성한다.
 
 ### 과제시 commit 메세지를 올바르게 작성한다.
 commit convention 을 지켜서 커밋 메세지를 작성한다.
