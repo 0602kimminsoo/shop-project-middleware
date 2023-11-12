@@ -6,9 +6,9 @@
 ```plain
 ex) homework/junhowoo/ 
 ```
-
-## 과제 제출
-Pull Request 를 통해 과제를 제출한다.
+## 과제 시작
+### 과제 branch 생성
+main branch 에서 각자의 브랜치를 생성한다.
 ### 과제 제출을 위한 branch 
 ##### homework/{영문이름}/과제이름
 2주차 todolist 할일 목록 생성 과제 제출 브랜치
@@ -16,9 +16,14 @@ Pull Request 를 통해 과제를 제출한다.
 /homework/junhowoo/2nd-create-todos
 ```
 > 과제 이름은 주차에 맞게 제공할 예정
-### Pull Request 
-From : 과제 작성한 브랜치 
-To : homework/3rd/apply
+
+## 과제 제출
+Pull Request 를 통해 과제를 제출한다.
+### Pull Request
+
+- From : 과제 작성한 브랜치 
+- To : homework/3rd/apply
+
 ex)
 <img width="810" alt="스크린샷 2023-11-12 오후 12 22 52" src="https://github.com/node3rd-basic/node_3_basic_Class/assets/4198098/2a9f1609-e3a3-47a7-9376-94276c3ac9f2">
 
