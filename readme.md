@@ -69,9 +69,9 @@
 - 이제 다시 멋진 프로젝트를 만들어 보자
 
 ## Branch
-- homework 
+- homework* 
   - 과제 제출 및 과제 제출 통합 브랜치
-- feature
+- feature*
   - 각 기능을 작성한 branch / 학생들은 해당 branch 를 수정 push merge commit 하지 않는다.
 
 ## Directories

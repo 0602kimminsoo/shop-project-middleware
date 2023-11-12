@@ -17,7 +17,8 @@ Pull Request 를 통해 과제를 제출한다.
 ```
 > 과제 이름은 주차에 맞게 제공할 예정
 ### Pull Request 
-
+From : 과제 작성한 브랜치 
+To : homework/3rd/apply
 
 ### Pull Request 이름
 [한글 이름] 과제 이름
