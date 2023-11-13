@@ -1,0 +1,26 @@
+# Task
+백엔드 서버에서 할일 목록을 요청/응답할수 있도록 작성 한다.
+
+## Url
+/todo-items
+
+## Response structure
+```json
+[
+		{
+			id: 1, // number (Unique) 
+      title: "2주차 과제를 한다.", // String 
+      status: "new", // String (default: "new")
+		}, 
+		// ...
+]
+```
+
+# 오늘의 중요 내용.
+- node 에 외부 라이브러리 설치 해라 -> npm -> package.json -> require
+- 다른 파일의 내용을 현재 파일에 불러온다 -> require
+- restAPI 형식 두가지
+  - underscore 대신 dash 를 써라 ( "_" => "-")
+  - 요청 리소스가 여러개면 (array 형태면) 복수를 써라 (ex: todo-items)
+- router 는 요청, 응답 (req, res)를 받을 수 있다.
+
